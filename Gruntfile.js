@@ -124,13 +124,16 @@ module.exports = function (grunt) {
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
+                reporter: require('jshint-stylish'),
+                globals: {
+                    "indent": 2    
+                },
             },
             all: [
-                'Gruntfile.js',
+               /* 'Gruntfile.js',*/
                 '<%= config.app %>/scripts/{,*/}*.js',
                 '!<%= config.app %>/scripts/vendor/*',
-                'test/spec/{,*/}*.js'
+                //'test/spec/{,*/}*.js'*
             ]
         },
 
