@@ -1,7 +1,7 @@
 fe-default-scaffold
 ===================
 
-Front-end scaffold using Yeoman
+Front-end scaffold with Bootstrap and LESS. Built off of Yeoman web app generator.
 
 ## Getting Started
 Install: Yo, Grunt, Bower
