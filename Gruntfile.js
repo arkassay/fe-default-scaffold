@@ -26,6 +26,13 @@ module.exports = function (grunt) {
 
         // Project settings
         config: config,
+        
+        version: {
+          options: {
+            prefix: 'pb.version\\s+=\\s+[\'"]'
+          },
+          src: ['app/scripts/pb.main.js']
+        },
 
         // Watches files for changes and runs tasks based on the changed files
         watch: {
@@ -35,7 +42,7 @@ module.exports = function (grunt) {
             },
             js: {
                 files: ['<%= config.app %>/scripts/{,*/}*.js'],
-                tasks: ['jshint'],
+                tasks: ['gjslint'],
                 options: {
                     livereload: true
                 }
@@ -48,8 +55,8 @@ module.exports = function (grunt) {
                 files: ['Gruntfile.js']
             },
             styles: {
-                files: ['<%= config.app %>/styles/{,*/}*.css'],
-                tasks: ['newer:copy:styles', 'autoprefixer']
+                files: ['<%= config.app %>/styles/{,*/}*.less', '<%= config.app %>/{,*/}/styles/{,*/}*.less'],
+                tasks: ['less', 'newer:copy:styles', 'autoprefixer']
             },
             livereload: {
                 options: {
@@ -119,20 +126,34 @@ module.exports = function (grunt) {
             },
             server: '.tmp'
         },
+        // Using Google's Closure linter over JSHint
+        gjslint: {
+            options: {
+                flags: [
+                    '--disable 220', //ignore error code 220 from gjslint
+                    '--strict',
+                    '--nojsdoc'
+                ],
+                reporter: {
+                    name: 'console'
+                }
+            },
+            all: [
+                '<%= config.app %>/scripts/{,*/}*.js',
+                '!<%= config.app %>/scripts/vendors/*'
+            ]
+        },
 
         // Make sure code styles are up to par and there are no obvious mistakes
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish'),
-                globals: {
-                    "indent": 2    
-                },
             },
             all: [
                /* 'Gruntfile.js',*/
                 '<%= config.app %>/scripts/{,*/}*.js',
-                '!<%= config.app %>/scripts/vendor/*',
+                '!<%= config.app %>/scripts/vendors/*'
                 //'test/spec/{,*/}*.js'*
             ]
         },
@@ -247,7 +268,24 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
+        less: {
+        	  development: {
+        	    options: {
+            	      cleancss: false,
+            	    },
+        		  files: {
+        	      "<%= config.app %>/styles/main.css": "<%= config.app %>/styles/main.less",
+        	    }
+        	  },
+        	  production: {
+        	    options: {
+        	      cleancss: true,
+        	    },
+        	    files: {
+        	      "<%= config.app %>/styles/main.css": "<%= config.app %>/styles/main.less",
+        	    }
+        	  }
+        	},
         // By default, your `index.html`'s <!-- Usemin block --> will take care of
         // minification. These next options are pre-configured if you do not wish
         // to use the Usemin blocks.
@@ -353,6 +391,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'version',
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
@@ -360,7 +399,7 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
-        'rev',
+        //'rev',
         'usemin',
         'htmlmin'
     ]);
@@ -368,6 +407,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'newer:jshint',
         'test',
-        'build'
+        'build',
+        'gjslint'
     ]);
 };
