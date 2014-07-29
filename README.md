@@ -24,12 +24,9 @@ html5shiv.js
 
 Google Closure Linter
 
-IE compatibility mode meta tag
-
-Social Media meta tags
-
 Customized build scripts
 
+Social Media meta tags, IE compatibility mode meta tag
 
 ## Setup
 
