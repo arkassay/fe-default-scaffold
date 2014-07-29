@@ -33,7 +33,7 @@ pb.controller = (function() {
   };
 
   function handlers() {
-    //insert initial controller event handlers here.    
+    //insert initial controller event handlers here.
     $(window).load(function() {
 
     });
