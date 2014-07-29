@@ -35,6 +35,7 @@ Clone the repository, open the project in terminal.
 ```shell
 npm install
 bower install
+grunt serve
 ```
 
 
