@@ -4,7 +4,7 @@ fe-default-scaffold
 Front-end scaffold using Yeoman
 
 ## Getting Started
-requires Yo, Grunt, Bower
+Install: Yo, Grunt, Bower
 
 ```shell
 npm install -g yo
