@@ -33,9 +33,9 @@ pb.controller = (function() {
   };
 
   function handlers() {
-    console.log('Heyy!');
+    //insert initial controller event handlers here.    
     $(window).load(function() {
-      //insert initial controller event handlers here.
+
     });
   }
 
