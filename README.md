@@ -18,9 +18,7 @@ LESS
 
 jQuery
 
-respond.min.js
-
-html5shiv.js
+ie8 compatibility scripts
 
 Google Closure Linter
 
